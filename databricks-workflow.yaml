@@ -1,0 +1,26 @@
+resources:
+  jobs:
+    ETL:
+      name: ETL
+      tasks:
+        - task_key: Load_Bronze_Tables
+          notebook_task:
+            notebook_path: /Workspace/Users/kinjal916@gmail.com/Load Bronze
+            source: WORKSPACE
+          existing_cluster_id: 0527-120630-9jodgylg
+        - task_key: Load_Silver_Tables
+          depends_on:
+            - task_key: Load_Bronze_Tables
+          notebook_task:
+            notebook_path: /Workspace/Users/kinjal916@gmail.com/Load Silver
+            source: WORKSPACE
+          existing_cluster_id: 0527-120630-9jodgylg
+        - task_key: Load_Gold_Tables
+          depends_on:
+            - task_key: Load_Silver_Tables
+          notebook_task:
+            notebook_path: /Workspace/Users/kinjal916@gmail.com/Load Gold
+            source: WORKSPACE
+          existing_cluster_id: 0527-120630-9jodgylg
+      queue:
+        enabled: true
